@@ -54,24 +54,18 @@ jobs:
           GHCR_PAT: ${{ secrets.GHCR_PAT }}
                 
 
-      # 5) Login a GHCR (usa el token interno)
+      # 6) Login a GHCR con tu PAT
       - uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: kevin10h 
-          password: ${{ secrets.GITHUB_TOKEN }}
+         registry: ghcr.io
+        username: kevin10h
+        password: ${{ secrets.GHCR_PAT }}
 
-      # 6) Push
-      - name: Build image   
-        run: docker build \
-              -t ghcr.io/kevin10h/erp-conexion:${{ github.sha }} .
-
-      - name: Push image                        
+      # 7) Push imagen
+      - name: Push image
         run: |
           docker push ghcr.io/kevin10h/erp-conexion:${{ github.sha }}
-          docker tag  ghcr.io/kevin10h/erp-conexion:${{ github.sha }} \
-                      ghcr.io/kevin10h/erp-conexion:latest
-          docker push ghcr.io/kevin10h/erp-conexion:latest        
+          docker push ghcr.io/kevin10h/erp-conexion:latest      
 
 
       # 7) Resumen visual
