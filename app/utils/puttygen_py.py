@@ -2,7 +2,11 @@
 Mini-PuTTYgen: genera clave RSA y la convierte a .ppk.
 Requiere los binarios ssh-keygen y puttygen (paquete putty-tools).
 """
-import argparse, getpass, os, subprocess, tempfile, shutil, textwrap, sys, pathlib
+import argparse
+import getpass
+import subprocess
+import tempfile
+import pathlib
 
 def _run(cmd: list[str]):
     subprocess.run(cmd, check=True, text=True)

@@ -1,5 +1,5 @@
 """Utility to bootstrap demo environment: generate model and key"""
-import subprocess, pathlib, sys
+import pathlib
 from app.utils.puttygen_py import gen_ppk
 from app.models.ml import _train_dummy, MODEL_PATH
 

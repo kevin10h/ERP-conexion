@@ -1,4 +1,5 @@
-import logging, sys
+import logging
+import sys
 from pythonjsonlogger import jsonlogger
 
 def init_logging(level: str = "INFO"):
