@@ -46,11 +46,18 @@ jobs:
           docker tag  $REGISTRY/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} \
                       $REGISTRY/${{ env.IMAGE_NAME }}:latest
 
+      # 4-bis) Debug: ¿llega el PAT?
+      - name: Check PAT length (debug)
+        run: echo "PAT length: ${#GHCR_PAT}"
+        env:
+          GHCR_PAT: ${{ secrets.GHCR_PAT }}
+                
+
       # 5) Login a GHCR (usa el token interno)
       - uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
+          username: kevin10h 
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # 6) Push
