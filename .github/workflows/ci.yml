@@ -47,8 +47,9 @@ jobs:
                       $REGISTRY/${{ env.IMAGE_NAME }}:latest
 
       # 4-bis) Debug: ¿llega el PAT?
-      - name: Check PAT length (debug)
-        run: echo "PAT length: ${#GHCR_PAT}"
+      - name: Debug PAT length
+        run: |
+          echo "GHCR_PAT length: ${#GHCR_PAT}"
         env:
           GHCR_PAT: ${{ secrets.GHCR_PAT }}
                 
