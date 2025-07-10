@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    ports:
+      - "8000:80"
+    environment:
+      JWT_SECRET: changeme
+      BANK_HOST: bank
+      BANK_PORT: 22
+      BANK_USER: pivot_user
+      BANK_KEY: /keys/pivot_user.ppk
+    volumes:
+      - ./keys:/keys
+    depends_on:
+      - bank
+  bank:
+    image: atmoz/sftp
+    command: pivot_user::1001
+    volumes:
+      - ./bank-data:/home/pivot_user/upload
+    ports:
+      - "2222:22"
