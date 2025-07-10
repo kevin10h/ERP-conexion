@@ -62,10 +62,17 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # 6) Push
-      - name: Push image
+      - name: Build image   
+        run: docker build \
+              -t ghcr.io/kevin10h/erp-conexion:${{ github.sha }} .
+
+      - name: Push image                        
         run: |
-          docker push $REGISTRY/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
-          docker push $REGISTRY/${{ env.IMAGE_NAME }}:latest
+          docker push ghcr.io/kevin10h/erp-conexion:${{ github.sha }}
+          docker tag  ghcr.io/kevin10h/erp-conexion:${{ github.sha }} \
+                      ghcr.io/kevin10h/erp-conexion:latest
+          docker push ghcr.io/kevin10h/erp-conexion:latest        
+
 
       # 7) Resumen visual
       - name: Publish summary
