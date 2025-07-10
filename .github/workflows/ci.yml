@@ -57,9 +57,9 @@ jobs:
       # 6) Login a GHCR con tu PAT
       - uses: docker/login-action@v3
         with:
-         registry: ghcr.io
-        username: kevin10h
-        password: ${{ secrets.GHCR_PAT }}
+          registry: ghcr.io
+          username: kevin10h
+          password: ${{ secrets.GHCR_PAT }}
 
       # 7) Push imagen
       - name: Push image
