@@ -1,5 +1,4 @@
 ![CI](https://github.com/kevin10h/ERP-conexion/actions/workflows/ci.yml/badge.svg)
-
 # ERP ↔ PivotConnect Bridge
 
 A minimal Python/FastAPI project that exposes health readings & ML predictions to an ERP and forwards
