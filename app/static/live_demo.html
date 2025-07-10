@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERP ↔ Banco - Live Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 py-10">
+  <div class="max-w-xl mx-auto bg-white shadow rounded-xl p-6 space-y-8" role="main">
+    <h1 class="text-2xl font-bold text-center">Mini Demo ERP ↔ Banco</h1>
+
+    <!-- Login -->
+    <section aria-labelledby="login-heading">
+      <h2 id="login-heading" class="text-lg font-semibold mb-2">1️⃣ Login</h2>
+      <div class="flex flex-col gap-3 mb-2" role="group" aria-label="Formulario de login">
+        <label class="flex flex-col gap-1">
+          <span class="text-sm font-medium">Usuario</span>
+          <input id="user" name="user" placeholder="demo" class="border p-2 rounded" />
+        </label>
+        <label class="flex flex-col gap-1">
+          <span class="text-sm font-medium">Contraseña</span>
+          <input id="pass" name="pass" type="password" placeholder="demo" class="border p-2 rounded" />
+        </label>
+        <button id="loginBtn" class="self-start bg-indigo-600 text-white px-4 py-2 rounded">Login</button>
+      </div>
+      <p class="text-sm">JWT: <code id="token" class="break-all"></code></p>
+    </section>
+
+    <!-- Lecturas -->
+    <section aria-labelledby="readings-heading">
+      <h2 id="readings-heading" class="text-lg font-semibold mb-2">2️⃣ Obtener lecturas</h2>
+      <button id="readBtn" class="bg-green-600 text-white px-4 py-2 rounded mb-2">GET /readings</button>
+      <pre id="readings" class="bg-gray-50 p-3 rounded h-32 overflow-auto" aria-live="polite"></pre>
+    </section>
+
+    <!-- Predicción -->
+    <section aria-labelledby="prediction-heading">
+      <h2 id="prediction-heading" class="text-lg font-semibold mb-2">3️⃣ Predicción ML</h2>
+      <div class="flex flex-col gap-3 mb-2" aria-label="Enviar vector de características">
+        <label class="flex flex-col gap-1">
+          <span class="text-sm font-medium">Características (Ej.: 0.2,0.4,0.9)</span>
+          <input id="feat" name="feat" placeholder="0.2,0.4,0.9" class="border p-2 rounded" />
+        </label>
+        <button id="predBtn" class="self-start bg-blue-600 text-white px-4 py-2 rounded">POST /predictions</button>
+      </div>
+      <pre id="prediction" class="bg-gray-50 p-3 rounded h-20 overflow-auto" aria-live="polite"></pre>
+    </section>
+
+    <!-- Transferencia -->
+    <section aria-labelledby="transfer-heading">
+      <h2 id="transfer-heading" class="text-lg font-semibold mb-2">4️⃣ Enviar archivo al banco</h2>
+      <div class="flex flex-col gap-3 mb-2" aria-label="Subir archivo">
+        <label class="flex flex-col gap-1">
+          <span class="text-sm font-medium">Archivo</span>
+          <input type="file" id="file" name="file" aria-label="Archivo a transferir" class="border p-2 rounded" />
+        </label>
+        <button id="sendBtn" class="self-start bg-orange-600 text-white px-4 py-2 rounded">POST /bank/transfer</button>
+      </div>
+      <pre id="transfer" class="bg-gray-50 p-3 rounded h-20 overflow-auto" aria-live="polite"></pre>
+    </section>
+  </div>
+
+<script>
+const BASE = '' // mismo host: proxy para desarrollo
+let jwt = ''
+
+function setToken(t){
+  jwt = t
+  document.getElementById('token').textContent = t ? t.slice(0,40)+'…' : ''
+}
+
+document.getElementById('loginBtn').onclick = async ()=>{
+  const user = document.getElementById('user').value
+  const pass = document.getElementById('pass').value
+  const body = new URLSearchParams({username:user,password:pass})
+  const r = await fetch(`${BASE}/auth/token`,{method:'POST',body})
+  const j = await r.json()
+  setToken(j.access_token||'')
+}
+
+document.getElementById('readBtn').onclick = async ()=>{
+  const r = await fetch(`${BASE}/readings`,{headers:{Authorization:`Bearer ${jwt}`}})
+  document.getElementById('readings').textContent = JSON.stringify(await r.json(),null,2)
+}
+
+document.getElementById('predBtn').onclick = async ()=>{
+  const parts = document.getElementById('feat').value.split(',').map(Number)
+  const r = await fetch(`${BASE}/predictions`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json',Authorization:`Bearer ${jwt}`},
+    body:JSON.stringify({features:parts})
+  })
+  document.getElementById('prediction').textContent = JSON.stringify(await r.json(),null,2)
+}
+
+document.getElementById('sendBtn').onclick = async ()=>{
+  const fileInput = document.getElementById('file')
+  if(!fileInput.files[0]) return alert('Selecciona un archivo')
+  const form = new FormData()
+  form.append('file', fileInput.files[0])
+  const r = await fetch(`${BASE}/bank/transfer`,{
+    method:'POST',
+    headers:{Authorization:`Bearer ${jwt}`},
+    body:form
+  })
+  document.getElementById('transfer').textContent = JSON.stringify(await r.json(),null,2)
+}
+</script>
+</body>
+</html>
