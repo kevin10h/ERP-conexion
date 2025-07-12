@@ -3,7 +3,10 @@ Entrena varios algoritmos, elige el mejor (F1)
 y guarda un Pipeline (scaler+modelo) en app/models/ml.joblib
 uso:  python scripts/train_anxiety_model.py datos.csv
 """
-import sys, warnings, joblib, pandas as pd
+import sys
+import warnings
+import joblib
+import pandas as pd
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -68,7 +71,8 @@ for name, clf in cands.items():
     pipe.fit(X_tr, y_tr)
     f1 = f1_score(y_te, pipe.predict(X_te))
     print(f"{name:>6}: F1={f1:.3f}")
-    if f1>best_f1: best, best_f1 = pipe, f1
+    if f1>best_f1:
+        best, best_f1 = pipe, f1
 
 print(f"🏆 Mejor modelo F1={best_f1:.3f} → guardando {OUT}")
 OUT.parent.mkdir(parents=True, exist_ok=True)

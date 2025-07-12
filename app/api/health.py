@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
 from app.core.security import get_current_user
 from app.models import ml
-from pydantic import BaseModel, Field
 
 router = APIRouter()
 
