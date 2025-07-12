@@ -85,13 +85,14 @@ document.getElementById('readBtn').onclick = async ()=>{
 }
 
 document.getElementById('predBtn').onclick = async ()=>{
-  const parts = document.getElementById('feat').value.split(',').map(Number)
-  const r = await fetch(`${BASE}/predictions`,{
+  const obj = Object.fromEntries(
+      document.getElementById('feat').value.split(',').map(v=>v.trim().split('=')))
+  const r = await fetch('/predictions',{
     method:'POST',
     headers:{'Content-Type':'application/json',Authorization:`Bearer ${jwt}`},
-    body:JSON.stringify({features:parts})
+    body:JSON.stringify({data: obj})
   })
-  document.getElementById('prediction').textContent = JSON.stringify(await r.json(),null,2)
+  prediction.textContent = JSON.stringify(await r.json(),null,2)
 }
 
 document.getElementById('sendBtn').onclick = async ()=>{
