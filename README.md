@@ -21,6 +21,8 @@ docker compose up --build
 * **API** disponible en [`http://localhost:8000/docs`](http://localhost:8000/docs)
 * **DEMO** disponible en [`http://localhost:8000/demo/live_demo.html`](http://localhost:8000/demo/live_demo.html)
 * **Servidor SFTP** expuesto en [`sftp://localhost:2222`](sftp://localhost:2222)
+
+```
 ```
 ## Endpoints
 
@@ -30,7 +32,8 @@ docker compose up --build
 | `GET`  | `/readings`   | Lecturas de salud de ejemplo |
 | `POST` | `/predictions`| Predicción Modelo de Machine learning |
 | `POST` | `/bank/transfer` | Subir archivo al banco (SFTP) |
-
+```
+```
 ## Desarrollo local
 
 ```bash
@@ -39,4 +42,4 @@ pip install -r requirements.txt
 python scripts/bootstrap.py         # create model + key
 uvicorn app.main:app --reload
 ```
-::contentReference[oaicite:0]{index=0}
+
