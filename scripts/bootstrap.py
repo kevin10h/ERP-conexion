@@ -1,16 +1,15 @@
-"""Utility to bootstrap demo environment: generate model and key"""
-import pathlib
+from pathlib import Path
 from app.utils.puttygen_py import gen_ppk
-from app.models.ml import _train_dummy, MODEL_PATH
+
+KEY_PATH = Path("keys/pivot_user.ppk")
 
 def main():
-    print('[1/2] Generating ML model...')
-    _train_dummy()
-    print(f'  -> saved at {MODEL_PATH}')
-    print('[2/2] Generating pivot_user.ppk...')
-    key_path = pathlib.Path('pivot_user.ppk')
-    gen_ppk(str(key_path))
-    print('Done.')
+    if KEY_PATH.exists():
+        print(f"🔑 Clave ya presente → {KEY_PATH}")
+    else:
+        print("[1/1] Generando pivot_user.ppk…")
+        KEY_PATH.parent.mkdir(exist_ok=True)
+        gen_ppk(str(KEY_PATH))
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
