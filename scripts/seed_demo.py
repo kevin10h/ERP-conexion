@@ -2,13 +2,13 @@
 Inserta el usuario demo/demo (si no existe)
 y varias lecturas de ejemplo.
 """
-import random, time
+import random
+import time
 from passlib.hash import bcrypt
 
 # 👉  NUEVO: asegura que las tablas existen
 from app.db.base import Base
 from app.db.session import engine, SessionLocal
-import app.db.models           # importa y registra User, Reading, etc.
 
 from app.db.models import User, Reading
 

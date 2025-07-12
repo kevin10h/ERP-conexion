@@ -3,8 +3,6 @@ from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from app.db.base import Base
 import time
-from sqlalchemy import Column, Integer, ForeignKey
-from sqlalchemy.sql import func 
 
 
 class Reading(Base):
