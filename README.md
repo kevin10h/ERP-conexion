@@ -19,6 +19,7 @@ docker compose up --build
 ```
 
 * **API** disponible en [`http://localhost:8000/docs`](http://localhost:8000/docs)
+* **DEMO** disponible en [`http://localhost:8000/demo/live_demo.html`](http://localhost:8000/demo/live_demo.html)
 * **Servidor SFTP** expuesto en [`sftp://localhost:2222`](sftp://localhost:2222)
 ```
 ## Endpoints
