@@ -1,6 +1,8 @@
 from pathlib import Path
 import joblib
 import numpy as np
+from joblib import load
+pipe = load("app/models/ml.joblib")
 
 MODEL_PATH = Path(__file__).with_suffix(".joblib")
 
@@ -24,6 +26,10 @@ def predict_from_dict(payload: dict[str, float]) -> float:
 
     X = np.array([[payload[c] for c in cols]], dtype=float)
     return float(pipe.predict(X)[0])
+
+# Scikit-learn usa feature_names_in_, CatBoost usa feature_names_
+names = getattr(pipe, "feature_names_in_", None) or getattr(pipe, "feature_names_")
+print(list(names))
 
 
 

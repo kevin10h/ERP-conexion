@@ -39,10 +39,12 @@
       <h2 id="prediction-heading" class="text-lg font-semibold mb-2">3️⃣ Predicción ML</h2>
       <div class="flex flex-col gap-3 mb-2" aria-label="Enviar vector de características">
         <label class="flex flex-col gap-1">
-          <span class="text-sm font-medium">Características (Ej.: Age=20,Gender=1,Occupation=0,Sleep Hours=8,Physical Activity (hrs/week)=4,Caffeine Intake (mg/day)=150,Alcohol Consumption=2,Smoking=0,Family History=0,Stress Level=5,Heart Rate=75,Breathing Rate=18,Sweating Level=2,Dizziness=0,Medication=0,Therapy Sessions=0,Major Event=1,Diet Quality=3)</span>
-          <input id="feat" name="feat" placeholder="Age=20,Gender=1,Occupation=0,Sleep Hours=8,Physical Activity (hrs/week)=4,Caffeine Intake (mg/day)=150,Alcohol Consumption=2,Smoking=0,Family History=0,Stress Level=5,Heart Rate=75,Breathing Rate=18,Sweating Level=2,Dizziness=0,Medication=0,Therapy Sessions=0,Major Event=1,Diet Quality=3" class="border p-2 rounded" />
+          <span class="text-sm font-medium">Características (usa <i>clave=valor</i> separadas por coma)</span>
+          <input id="feat" name="feat"
+                 placeholder="Age=20,Gender=1,Occupation=0,Sleep Hours=8,Physical Activity (hrs/week)=4,Caffeine Intake (mg/day)=150,Alcohol Consumption (drinks/week)=2,Smoking=0,Family History of Anxiety=0,Stress Level (1-10)=5,Heart Rate (bpm)=75,Breathing Rate (breaths/min)=18,Sweating Level (1-5)=2,Dizziness=0,Medication=0,Therapy Sessions (per month)=0,Recent Major Life Event=1,Diet Quality (1-10)=3"
+                 class="border p-2 rounded" />
         </label>
-        <button id="predBtn" class="self-start bg-blue-600 text-white px-4 py-2 rounded">POST /predictions</button>" class="self-start bg-blue-600 text-white px-4 py-2 rounded">POST /predictions</button>
+        <button id="predBtn" class="self-start bg-blue-600 text-white px-4 py-2 rounded">POST /predictions</button>
       </div>
       <pre id="prediction" class="bg-gray-50 p-3 rounded h-20 overflow-auto" aria-live="polite"></pre>
     </section>
@@ -62,7 +64,7 @@
   </div>
 
 <script>
-const BASE = '' // mismo host: proxy para desarrollo
+const BASE = '' // mismo host en prod/compose
 let jwt = ''
 
 function setToken(t){
