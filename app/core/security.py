@@ -1,3 +1,4 @@
+# app/core/security.py
 import os
 import time
 import jwt
@@ -7,12 +8,13 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from starlette import status
 
 pwd_ctx = CryptContext(schemes=["bcrypt"], deprecated="auto")
-SECRET = os.getenv("JWT_SECRET", "changeme")
-ALGO = "HS256"
+SECRET  = os.getenv("JWT_SECRET", "changeme")
+ALGO    = "HS256"
 EXPIRES = 60 * 30  # 30 min
 
 security_scheme = HTTPBearer()
 
+# ───────── helpers ─────────
 def hash_pw(pw: str) -> str:
     return pwd_ctx.hash(pw)
 
@@ -26,9 +28,15 @@ def create_token(sub: str) -> str:
 def decode_token(token: str):
     return jwt.decode(token, SECRET, algorithms=[ALGO])
 
-def get_current_user(creds: HTTPAuthorizationCredentials = Depends(security_scheme)) -> str:
+# ───────── dependency ───────
+def get_current_user(
+    creds: HTTPAuthorizationCredentials = Depends(security_scheme)
+) -> str:
     try:
         payload = decode_token(creds.credentials)
-        return payload["sub"]
+        return payload["sub"]           # ← devolvemos SOLO el username
     except jwt.PyJWTError:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token",
+        )

@@ -10,3 +10,8 @@ cryptography==42.0.5
 python-json-logger==2.0.7
 puttykeys==1.0.3
 catboost>=1.2.5
+sqlalchemy>=2.0
+alembic>=1.10.3
+passlib>=1.7.4
+bcrypt==4.0.1      # versión compatible con passlib
+
