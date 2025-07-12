@@ -18,7 +18,7 @@ def test_predict_json():
         "Sleep Hours": 8,
         "Physical Activity (hrs/week)": 4,          # ← nombre exacto
         "Caffeine Intake (mg/day)": 150,
-        "Alcohol Consumption": 2,
+        "Alcohol Consumption (drinks/week)": 2,
         "Smoking": 0,
         "Family History": 0,
         "Stress Level": 5,
