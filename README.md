@@ -17,7 +17,7 @@ docker run --rm -v $PWD:/code -w /code python:3.12 \
 
 docker compose up --build
 ```
-```
+
 * **API** disponible en [`http://localhost:8000/docs`](http://localhost:8000/docs)
 * **Servidor SFTP** expuesto en [`sftp://localhost:2222`](sftp://localhost:2222)
 ```
