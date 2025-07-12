@@ -20,7 +20,7 @@ docker compose up --build
 
 * API disponible en <http://localhost:8000/docs>
 * Servidor SFTP expuesto en `localhost:2222`.
-
+```
 ## Endpoints
 
 | Método | 	Ruta | Descripción |
