@@ -1,5 +1,7 @@
 from pathlib import Path
-import joblib, numpy as np
+import joblib
+import numpy as np
+
 MODEL_PATH = Path(__file__).with_suffix(".joblib")
 
 _model = None
