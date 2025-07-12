@@ -39,10 +39,10 @@
       <h2 id="prediction-heading" class="text-lg font-semibold mb-2">3️⃣ Predicción ML</h2>
       <div class="flex flex-col gap-3 mb-2" aria-label="Enviar vector de características">
         <label class="flex flex-col gap-1">
-          <span class="text-sm font-medium">Características (Ej.: Age=20,Gender=1,Occupation=0,Sleep Hours=8,Physical Activity=4,Caffeine Intake=150,Alcohol Consumption=2,Smoking=0,Family History=0,Stress Level=5,Heart Rate=75,Breathing Rate=18,Sweating Level=2,Dizziness=0,Medication=0,Therapy Sessions=0,Major Event=1,Diet Quality=3)</span>
-          <input id=\"feat\" name=\"feat\" placeholder=\"Age=20,Gender=1,Occupation=0,Sleep Hours=8,Physical Activity=4,Caffeine Intake=150,Alcohol Consumption=2,Smoking=0,Family History=0,Stress Level=5,Heart Rate=75,Breathing Rate=18,Sweating Level=2,Dizziness=0,Medication=0,Therapy Sessions=0,Major Event=1,Diet Quality=3\" class=\"border p-2 rounded\" class="border p-2 rounded" />
+          <span class="text-sm font-medium">Características (Ej.: Age=20,Gender=1,Occupation=0,Sleep Hours=8,Physical Activity (hrs/week)=4,Caffeine Intake (mg/day)=150,Alcohol Consumption=2,Smoking=0,Family History=0,Stress Level=5,Heart Rate=75,Breathing Rate=18,Sweating Level=2,Dizziness=0,Medication=0,Therapy Sessions=0,Major Event=1,Diet Quality=3)</span>
+          <input id="feat" name="feat" placeholder="Age=20,Gender=1,Occupation=0,Sleep Hours=8,Physical Activity (hrs/week)=4,Caffeine Intake (mg/day)=150,Alcohol Consumption=2,Smoking=0,Family History=0,Stress Level=5,Heart Rate=75,Breathing Rate=18,Sweating Level=2,Dizziness=0,Medication=0,Therapy Sessions=0,Major Event=1,Diet Quality=3" class="border p-2 rounded" />
         </label>
-        <button id="predBtn" class="self-start bg-blue-600 text-white px-4 py-2 rounded">POST /predictions</button>
+        <button id="predBtn" class="self-start bg-blue-600 text-white px-4 py-2 rounded">POST /predictions</button>" class="self-start bg-blue-600 text-white px-4 py-2 rounded">POST /predictions</button>
       </div>
       <pre id="prediction" class="bg-gray-50 p-3 rounded h-20 overflow-auto" aria-live="polite"></pre>
     </section>
@@ -85,11 +85,16 @@ document.getElementById('readBtn').onclick = async ()=>{
 }
 
 document.getElementById('predBtn').onclick = async ()=>{
-  const parts = document.getElementById('feat').value.split(',').map(Number)
+  const raw = document.getElementById('feat').value
+  const obj = {}
+  raw.split(',').forEach(pair=>{
+    const [k,v] = pair.split('=')
+    if(k && v) obj[k.trim()] = parseFloat(v)
+  })
   const r = await fetch(`${BASE}/predictions`,{
     method:'POST',
     headers:{'Content-Type':'application/json',Authorization:`Bearer ${jwt}`},
-    body:JSON.stringify({features:parts})
+    body:JSON.stringify({data: obj})
   })
   document.getElementById('prediction').textContent = JSON.stringify(await r.json(),null,2)
 }
