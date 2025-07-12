@@ -1,33 +1,36 @@
 ![CI](https://github.com/kevin10h/ERP-conexion/actions/workflows/ci.yml/badge.svg)
-# ERP ↔ PivotConnect Bridge
 
-A minimal Python/FastAPI project that exposes health readings & ML predictions to an ERP and forwards
-payment files to a bank‑like SFTP server, fulfilling the requirements described.
+# Puente ERP ↔ PivotConnect
 
-## Quick start (Docker Compose)
+Proyecto mínimo en **Python/FastAPI** que expone lecturas de salud y predicciones ML a un ERP, y reenvía
+archivos de pago a un servidor SFTP tipo banco.
+
+## Inicio rápido (Docker Compose)
 
 ```bash
 git clone <repo>
 cd erp_bank_bridge
-# Generate demo key + model
-docker run --rm -v $PWD:/code -w /code python:3.12        bash -c "pip install puttykeys scikit-learn joblib cryptography && python scripts/bootstrap.py"
+# Generar clave demo + modelo
+docker run --rm -v $PWD:/code -w /code python:3.12 \
+  bash -c "pip install puttykeys scikit-learn joblib cryptography && \
+           python scripts/bootstrap.py"
 
 docker compose up --build
-```
 
-* API available at <http://localhost:8000/docs>
-* SFTP server exposed on `localhost:2222`.
+
+* API disponible en <http://localhost:8000/docs>
+* Servidor SFTP expuesto en `localhost:2222`.
 
 ## Endpoints
 
-| Method | Path | Description |
+| Método | 	Ruta | Descripción |
 | ------ | ---- | ----------- |
-| `POST` | `/auth/token` | Get JWT access token |
-| `GET`  | `/readings`   | Dummy health readings |
-| `POST` | `/predictions`| Predict with dummy ML |
-| `POST` | `/bank/transfer` | Upload file to bank |
+| `POST` | `/auth/token` | 	Obtener token JWT |
+| `GET`  | `/readings`   | Lecturas de salud de ejemplo |
+| `POST` | `/predictions`| Predicción Modelo de Machine learning |
+| `POST` | `/bank/transfer` | Subir archivo al banco (SFTP) |
 
-## Local dev
+## Desarrollo local
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
@@ -35,3 +38,4 @@ pip install -r requirements.txt
 python scripts/bootstrap.py         # create model + key
 uvicorn app.main:app --reload
 ```
+::contentReference[oaicite:0]{index=0}
