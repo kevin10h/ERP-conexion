@@ -16,8 +16,8 @@ docker run --rm -v $PWD:/code -w /code python:3.12 \
            python scripts/bootstrap.py"
 
 docker compose up --build
-
-
+```
+```
 * API disponible en <http://localhost:8000/docs>
 * Servidor SFTP expuesto en `localhost:2222`.
 ```
